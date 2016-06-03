@@ -1,0 +1,26 @@
+html{
+	/*background-color: black;*/
+}
+form{
+		margin-left:10px;
+		color: #e67e22;
+}
+
+.same_line{
+		display: inline-block;
+}
+
+.colored-button{
+		/*background-color: #E91E63;*/
+		background-color: blue;
+
+}
+
+body{
+	background-color: #212121;	
+	color: #CFD8DC;
+}
+
+h1{
+	color: #F0494C;
+}

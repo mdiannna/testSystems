@@ -1,0 +1,64 @@
+html{
+	/*background-color: ;*/
+	background-color: #212121;	
+	/*color: #CFD8DC;*/
+	margin-left:10px;
+	width: 100%;
+}
+form{
+		margin-left:30px;
+		color: #cf8dDC;
+		background-color: #212121;	
+}
+
+.same_line{
+		display: inline-block;
+}
+
+.colored-button{
+		background-color: #E91E63;
+		/*background-color: blue;*/
+
+}
+
+body{
+	
+	background-color: #212121;	
+	/*color: #6DA8D6;*/
+	left-margin:10px;
+	width: 100%;
+}
+
+h1{
+	color: #F0494C;
+}
+
+canvas{
+	
+	margin-left: 10px;
+	margin-right: 15px;
+}
+
+label{
+	/*color: #FFFFFF;*/
+}
+
+.chart{
+	color: white;
+}
+
+.blueText{
+	/*color: "#F0494C";*/
+}
+
+table{
+	border:16px;
+	border-color: gray;
+	color:white;
+
+}
+
+th{
+	color: #cf8dDC;
+	font-weight: bold;
+}
