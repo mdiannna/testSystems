@@ -286,7 +286,10 @@ def compileCpp(system):
 	os.system("g++ " + "files/uploaded/" + system )
 	os.system("g++ -o " + "files/uploaded/main " + "files/uploaded/" + system)
 
-def testSystem(system, args):
+def testSystem(system, args, nr_of_tests):
+	time_max = 0.0
+	time = []
+
 	if ".py" in system:
 		command = "python"
 	elif ".c" in system or ".cpp" in system:
@@ -295,10 +298,17 @@ def testSystem(system, args):
 
 	execute = command + " " + "files/uploaded/" +  system + " " + args
 
-	time = timeit.timeit( lambda:os.system(execute), number=1)
+	for i in range(nr_of_tests):
+		temp_time = timeit.timeit( lambda:os.system(execute), number=1)
 
-	# os.system(execute)
-	return time
+		if temp_time > time_max:
+			time_max = temp_time
+
+		# time in milliseconds
+		time.append(temp_time * 1000)  
+
+	return time, time_max
+
 
 def calcPerformance(system, console_param, nr_of_tests):
 
@@ -308,26 +318,10 @@ def calcPerformance(system, console_param, nr_of_tests):
 	time_median = []
 	time_avg = []
 	time_mode = []
-	time_max = 0.0
-
-	for i in range(nr_of_tests):
-		# temp_time =(timeit.timeit(function_name + "(console_param)", setup="from app.views import " + function_name + "," + "console_param", number=1)) 
-
-		# temp_time = float(eval(function_name + "('" + system + "', '" + console_param + "')"))
-		# temp_time = float(eval(function_name + "('asddd', 'dddd')"))
-
-		# print "eval:" + function_name + "('" + system + "', '" + console_param + "')"
-		# print str(eval(function_name + "('" + system + "', '" + console_param + "')"))
-
-		temp_time = testSystem(system, console_param)
-		
-
-		if temp_time > time_max:
-			time_max = temp_time
-
-		# time in milliseconds
-		time.append(temp_time * 1000)  
-
+	
+	data = testSystem(system, console_param, nr_of_tests)
+	time = data[0]
+	time_max = data[1]
 	
 	for i in range(nr_of_tests):
 		time_median.append(median(time))
