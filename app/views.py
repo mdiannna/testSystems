@@ -32,7 +32,6 @@ def allowed_file(filename):
 	return '.' in filename and \
 		   filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-
 	
 @app.route('/uploader', methods = ['GET', 'POST'])
 def uploader_file():
@@ -59,10 +58,7 @@ def index():
 
 	first_sys_name = ''
 	second_sys_name = ''
-	algorithm = 'BMS'
 	nr_of_tests = 0
-	msg_len = 0
-	key_len = 0
 
 	first_time = []
 	first_time_median = []
@@ -96,8 +92,6 @@ def index():
 	   	elif f1 and f2 and allowed_file(f1.filename) and allowed_file(f2.filename):
 	   		f1.save(os.path.join(app.config['UPLOAD_FOLDER'], f1.filename))
 	   		f2.save(os.path.join(app.config['UPLOAD_FOLDER'], f2.filename))
-	   		# f.save(secure_filename(f.filename)):
-	   		# return 'file uploaded successfully'
 
 
 			exception = False
@@ -121,41 +115,33 @@ def index():
 			if not second_sys_name:
 				second_sys_name = 'System 2'
 
-			algorithm = 'BMS'
 
-			if not (algorithm == 'BMS' or algorithm == 'AES'):
-				exception = True
-			else:
-				# msg_len = form.msg_len.data
-				# key_len = form.key_len.data
+			system = f1.filename
+			console_param = str(form.first_sys_param.data)
+			data_statistics_first = calcPerformance(system, console_param, nr_of_tests)
 
+			first_time = data_statistics_first[0]
+			first_time_median = data_statistics_first[1]
+			first_time_avg = data_statistics_first[2]
+			first_time_mode = data_statistics_first[3]
+			first_time_max = data_statistics_first[4]
 
-				system = f1.filename
-				console_param = str(form.first_sys_param.data)
-				data_statistics_first = calcPerformance(system, console_param, nr_of_tests)
+			system = f2.filename
+			console_param = str(form.second_sys_param.data)
+			data_statistics_second = calcPerformance(system, console_param, nr_of_tests)
 
-				first_time = data_statistics_first[0]
-				first_time_median = data_statistics_first[1]
-				first_time_avg = data_statistics_first[2]
-				first_time_mode = data_statistics_first[3]
-				first_time_max = data_statistics_first[4]
+			second_time = data_statistics_second[0]
+			second_time_median = data_statistics_second[1]
+			second_time_avg = data_statistics_second[2]
+			second_time_mode = data_statistics_second[3]
+			second_time_max = data_statistics_second[4]
 
-				system = f2.filename
-				console_param = str(form.second_sys_param.data)
-				data_statistics_second = calcPerformance(system, console_param, nr_of_tests)
+			
+			max_value.append(max(first_time_max, second_time_max)* 1000)
+			print "max value:", max_value
 
-				second_time = data_statistics_second[0]
-				second_time_median = data_statistics_second[1]
-				second_time_avg = data_statistics_second[2]
-				second_time_mode = data_statistics_second[3]
-				second_time_max = data_statistics_second[4]
-
-				
-				max_value.append(max(first_time_max, second_time_max)* 1000)
-				print "max value:", max_value
-
-				print "first_time:", first_time, "second time:", second_time
-		
+			print "first_time:", first_time, "second time:", second_time
+	
 	return render_template("index.html", form=form, first_sys_name=first_sys_name, 
 			second_sys_name=second_sys_name,
 			first_time=first_time, second_time=second_time, nr_of_tests=nr_of_tests, 
@@ -175,10 +161,7 @@ def index_ro():
 
 	first_sys_name = ''
 	second_sys_name = ''
-	algorithm = 'BMS'
 	nr_of_tests = 0
-	msg_len = 0
-	key_len = 0
 
 	first_time = []
 	first_time_median = []
@@ -212,8 +195,6 @@ def index_ro():
 	   	elif f1 and f2 and allowed_file(f1.filename) and allowed_file(f2.filename):
 	   		f1.save(os.path.join(app.config['UPLOAD_FOLDER'], f1.filename))
 	   		f2.save(os.path.join(app.config['UPLOAD_FOLDER'], f2.filename))
-	   		# f.save(secure_filename(f.filename)):
-	   		# return 'file uploaded successfully'
 
 
 			exception = False
@@ -237,40 +218,30 @@ def index_ro():
 			if not second_sys_name:
 				second_sys_name = 'Sistem 2'
 
-			algorithm = 'BMS'
+			system = f1.filename
+			console_param = str(form.first_sys_param.data)
+			data_statistics_first = calcPerformance(system, console_param, nr_of_tests)
 
-			if not (algorithm == 'BMS' or algorithm == 'AES'):
-				exception = True
-			else:
-				# msg_len = form.msg_len.data
-				# key_len = form.key_len.data
+			first_time = data_statistics_first[0]
+			first_time_median = data_statistics_first[1]
+			first_time_avg = data_statistics_first[2]
+			first_time_mode = data_statistics_first[3]
+			first_time_max = data_statistics_first[4]
 
+			system = f2.filename
+			console_param = str(form.second_sys_param.data)
+			data_statistics_second = calcPerformance(system, console_param, nr_of_tests)
 
-				system = f1.filename
-				console_param = str(form.first_sys_param.data)
-				data_statistics_first = calcPerformance(system, console_param, nr_of_tests)
+			second_time = data_statistics_second[0]
+			second_time_median = data_statistics_second[1]
+			second_time_avg = data_statistics_second[2]
+			second_time_mode = data_statistics_second[3]
+			second_time_max = data_statistics_second[4]
+			
+			max_value.append(max(first_time_max, second_time_max)* 1000)
+			print "max value:", max_value
 
-				first_time = data_statistics_first[0]
-				first_time_median = data_statistics_first[1]
-				first_time_avg = data_statistics_first[2]
-				first_time_mode = data_statistics_first[3]
-				first_time_max = data_statistics_first[4]
-
-				system = f2.filename
-				console_param = str(form.second_sys_param.data)
-				data_statistics_second = calcPerformance(system, console_param, nr_of_tests)
-
-				second_time = data_statistics_second[0]
-				second_time_median = data_statistics_second[1]
-				second_time_avg = data_statistics_second[2]
-				second_time_mode = data_statistics_second[3]
-				second_time_max = data_statistics_second[4]
-
-				
-				max_value.append(max(first_time_max, second_time_max)* 1000)
-				print "max value:", max_value
-
-				print "first_time:", first_time, "second time:", second_time
+			print "first_time:", first_time, "second time:", second_time
 		
 	return render_template("index_ro.html", form=form, first_sys_name=first_sys_name, 
 			second_sys_name=second_sys_name,
@@ -281,10 +252,11 @@ def index_ro():
 
 
 
-
 def compileCpp(system):
 	os.system("g++ " + "files/uploaded/" + system )
 	os.system("g++ -o " + "files/uploaded/main " + "files/uploaded/" + system)
+
+
 
 def testSystem(system, args, nr_of_tests):
 	time_max = 0.0
@@ -310,9 +282,8 @@ def testSystem(system, args, nr_of_tests):
 	return time, time_max
 
 
-def calcPerformance(system, console_param, nr_of_tests):
 
-	function_name = "testSystem"
+def calcPerformance(system, console_param, nr_of_tests):
 
 	time = []
 	time_median = []
@@ -328,21 +299,3 @@ def calcPerformance(system, console_param, nr_of_tests):
 		time_avg.append(mean(time))
 		
 	return time, time_median, time_avg, time_mode, time_max
-
-
-
-
-@app.route('/compile')
-def compile():
-	os.system("g++ BMS_cpp/main_encrypt.cpp BMS_cpp/encryption.cpp BMS_cpp/decryption.cpp BMS_cpp/keylib.cpp" )
-	os.system('g++ -o BMS_cpp/encrypt BMS_cpp/main_encrypt.cpp BMS_cpp/encryption.cpp BMS_cpp/decryption.cpp BMS_cpp/keylib.cpp')
-	os.system("g++ BMS_cpp/main_decrypt.cpp BMS_cpp/encryption.cpp BMS_cpp/decryption.cpp BMS_cpp/keylib.cpp" )
-	os.system('g++ -o BMS_cpp/decrypt BMS_cpp/main_decrypt.cpp BMS_cpp/encryption.cpp BMS_cpp/decryption.cpp BMS_cpp/keylib.cpp')
-	# os.system('xxd -c10 -b ./BMS_cpp/main')
-	# os.system('./BMS_cpp/main')
-	comp_output = "<strong>C++ compilation output:<strong><br>"+ commands.getstatusoutput('./BMS_cpp/encrypt')[1].replace('\n', '<br>')
-	comp_output += "<br>---<br>"+ commands.getstatusoutput('./BMS_cpp/decrypt')[1].replace('\n', '<br>')
-
-	print "****", comp_output.replace('<strong>', "").replace('<br>', '\n')
-
-	return comp_output
